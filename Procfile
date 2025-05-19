@@ -1,1 +1,1 @@
-web: gunicorn mealmateproject.wsgi 
+web: gunicorn --pythonpath . mealmateproject.wsgi
