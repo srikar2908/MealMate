@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MealMate - Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header class="home-header">
+        <div class="logo">
+            <img src="{% static 'logo1.png' %}" alt="MealMate Logo" style="width:60px;">
+            <h1>MealMate</h1>
+        </div>
+        <nav>
+            <a href="{% url 'index' %}" class="btn">Logout</a>
+        </nav>
+    </header>
+
+    <main class="home-main">
+        <section class="search-card">
+            <h2>Search for Ingredients</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Type an ingredient...">
+                <button id="searchButton" type="button">Search</button>
+            </div>
+            <ul id="suggestions" class="suggestions"></ul>
+        </section>
+
+        <section class="selected-card">
+            <h2>Selected Ingredients</h2>
+            <ul id="selectedList" class="selected-ingredients"></ul>
+            <form id="ingredientsForm" action="{% url 'meal' %}" method="get">
+                <input type="hidden" id="hiddenIngredients" name="ingredients" value="">
+                <button type="submit" class="btn submit-btn">Generate Meal Plan</button>
+            </form>
+        </section>
+
+        <section id="recipeResults" class="recipe-results"></section>
+    </main>
+
+    <script src="{% static 'home.js' %}"></script>
+</body>
+</html>

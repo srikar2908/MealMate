@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login / Signup - AI Nutrition Assistant</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+  <body>
+    <div class="container login-container">
+      <div class="logo">
+        <img src="{% static 'logo1.png' %}" alt="AI Nutrition Assistant Logo" />
+        <h1>AI Nutrition Assistant</h1>
+      </div>
+      <div class="form-container">
+        <div class="tab-buttons">
+          <button id="loginTab" class="active">Login</button>
+          <button id="signupTab">Sign Up</button>
+        </div>
+        <!-- Login Form -->
+        <div id="loginForm" class="form-content active">
+          <h2>Welcome Back!</h2>
+          <form>
+            <div class="input-group">
+              <input type="email" id="loginEmail" placeholder="Email" required />
+            </div>
+            <div class="input-group">
+              <input type="password" id="loginPassword" placeholder="Password" required />
+            </div>
+            <button type="button" id="loginButton" class="btn">Login</button>
+          </form>
+        </div>
+        <!-- Signup Form -->
+        <div id="signupFormContainer" class="form-content">
+          <h2>Create Account</h2>
+          <form id="signupForm">
+            <div class="input-group">
+              <input type="text" id="signupName" placeholder="Name" required />
+            </div>
+            <div class="input-group">
+              <input type="email" id="signupEmail" placeholder="Email" required />
+            </div>
+            <div class="input-group">
+              <input type="password" id="signupPassword" placeholder="Password" required />
+            </div>
+            <div class="input-group">
+              <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
+              <small id="passwordError" class="error-message"></small>
+            </div>
+            <button type="button" id="signupButton" class="btn">Sign Up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript for tab switching, validation, and redirection -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginTab = document.getElementById("loginTab");
+        const signupTab = document.getElementById("signupTab");
+        const loginForm = document.getElementById("loginForm");
+        const signupFormContainer = document.getElementById("signupFormContainer");
+        const signupButton = document.getElementById("signupButton");
+        const loginButton = document.getElementById("loginButton");
+        const passwordInput = document.getElementById("signupPassword");
+        const confirmPasswordInput = document.getElementById("confirmPassword");
+        const passwordError = document.getElementById("passwordError");
+
+        // Tab switching
+        function switchTab(activeTab, inactiveTab, showForm, hideForm) {
+          activeTab.classList.add("active");
+          inactiveTab.classList.remove("active");
+          showForm.classList.add("active");
+          hideForm.classList.remove("active");
+        }
+
+        loginTab.addEventListener("click", function () {
+          switchTab(loginTab, signupTab, loginForm, signupFormContainer);
+        });
+
+        signupTab.addEventListener("click", function () {
+          switchTab(signupTab, loginTab, signupFormContainer, loginForm);
+        });
+
+        // Signup validation
+        signupButton.addEventListener("click", function () {
+          if (passwordInput.value !== confirmPasswordInput.value) {
+            passwordError.textContent = "Passwords do not match!";
+            passwordError.style.color = "red";
+          } else {
+            passwordError.textContent = "";
+            alert("Signup successful!");
+            switchTab(loginTab, signupTab, loginForm, signupFormContainer);
+          }
+        });
+
+        // Login functionality: redirect to home page
+        loginButton.addEventListener("click", function () {
+          window.location.href = "{% url 'home' %}"; // Django URL mapping
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MealMate - Meal Summary</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        /* Additional styling for better nutrition display */
+        .nutrition-table td:last-child {
+            text-align: right;
+            font-weight: 500;
+        }
+        .nutrition-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <header class="home-header">
+        <div class="logo">
+            <img src="{% static 'logo1.png' %}" alt="Diet Decoder Logo" style="width:60px;">
+            <h1>MealMate</h1>
+        </div>
+        <nav>
+            <a href="{% url 'home' %}" class="btn">Back to Search</a>
+        </nav>
+    </header>
+
+    <main class="home-main">
+        <section class="meal-summary">
+            <h2>Your Meal Summary</h2>
+
+            <div class="summary-section">
+                <h3>Selected Ingredients:</h3>
+                <ul class="ingredient-list">
+                    {% for ingredient in ingredients %}
+                        <li class="ingredient-item">{{ ingredient }}</li>
+                    {% empty %}
+                        <li class="no-items">No ingredients selected.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            
+
+            <div class="summary-section">
+                <h3>Suggested Recipes:</h3>
+                <div class="recipe-grid">
+                    {% for recipe in recipes %}
+                    <div class="recipe-card">
+                        <h4>{{ recipe.label }}</h4>
+                        <img src="{{ recipe.image }}" alt="{{ recipe.label }}">
+                        <p><strong>Calories:</strong> {{ recipe.calories|floatformat:0 }} kcal</p>
+                        <p><strong>Protein:</strong> {{ recipe.protein|floatformat:1 }} g</p>
+                        <p><strong>Fat:</strong> {{ recipe.fat|floatformat:1 }} g</p>
+                        <p><strong>Carbs:</strong> {{ recipe.carbs|floatformat:1 }} g</p>
+                        <p><strong>Fiber:</strong> {{ recipe.fiber|floatformat:1 }} g</p>
+                        <a href="{{ recipe.url }}" target="_blank" class="btn">View Recipe</a>
+                    </div>                    
+                    {% empty %}
+                        <p class="no-recipes">No recipes found. Try different ingredients!</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

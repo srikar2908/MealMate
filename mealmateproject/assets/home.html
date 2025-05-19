@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - MealMate</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header class="home-header">
+        <div class="logo">
+            <img src="{% static 'logo1.png' %}" alt="MealMate Logo">
+            <h1>MealMate</h1>
+        </div>
+        <nav>
+            <a href="{% url 'meal' %}" class="btn">Meal Summary</a>
+            <a href="{% url 'index' %}" class="btn logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <main class="home-main">
+        <div class="search-card">
+            <h2>Search for Ingredients</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Type an ingredient...">
+                <button id="searchButton" class="btn">Search</button>
+            </div>
+            <ul class="suggestions" id="suggestions" style="display: none;"></ul>
+        </div>
+
+        <div class="selected-card">
+            <h2>Your Selected Ingredients</h2>
+            <ul id="selectedList"></ul>
+
+            <form id="ingredientsForm" method="GET" action="{% url 'get_recipes' %}">
+                {% csrf_token %}
+                <input type="hidden" name="ingredients" id="hiddenIngredients">
+                <button type="submit" class="submit-btn">Find Recipes</button>
+            </form>
+        </div>
+
+        <div class="recipes-container">
+            <h2>Recommended Recipes</h2>
+            <div id="recipeResults"></div>
+        </div>
+    </main>
+
+    <script src="{% static 'home.js' %}"></script>
+</body>
+</html>
