@@ -59,13 +59,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mealmateproject.wsgi.application'
 
-# Database (auto-detect DATABASE_URL from environment)
-DATABASES = {
-    'default': dj_database_url.config(
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+# Database configuration with fallback for local development
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
+    # Use the DATABASE_URL environment variable if available (production on Render)
+    DATABASES = {
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    # Fallback for local development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'mealmatedb',
+            'USER': 'postgres',
+            'PASSWORD': '1234',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 # Edamam API Credentials
 EDAMAM_APP_ID = "dd428a7e"
