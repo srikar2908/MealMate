@@ -62,7 +62,6 @@ WSGI_APPLICATION = 'mealmateproject.wsgi.application'
 # Database (auto-detect DATABASE_URL from environment)
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://postgres:1234@localhost:5432/mealmatedb',
         conn_max_age=600,
         conn_health_checks=True,
     )
